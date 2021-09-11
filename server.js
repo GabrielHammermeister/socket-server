@@ -1,34 +1,28 @@
-const { Socket } = require('dgram')
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
-const app = require('express')()
-const http = require('http').createServer(app)
-
-const io = require('socket.io')(http)
-
-// __dirname é uma variável de ambiente que informa o caminho absoluto 
-// do diretório que contém o arquivo em execução no momento.
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
-})
+  res.sendFile(__dirname + '/index.html');
+});
 
-io.on('connection', (Socket) => {
-    console.log('new connection', Socket)
-})
+io.on('connection', (socket) => {
+  console.log('A user connected,  connection id: ', socket.id)
 
-http.listen( 3000 , function() {
-    console.log("Escutando na porta 3000")
-})
+  socket.on('send message', (message) => {
+    io.emit('receive message', message)
+  })
 
 
-var clients = [];
-var controllers = []
-var controller = {
-  new: function (idC) {
-    return {
-      id: idC,
-      resp: true
-    }
-  }
-}
+  socket.on('disconnect', () => {
+    console.log('A user Disconnected.');
+  })
 
-var maxPlayers = 0;
+});
+
+server.listen(3000, () => {
+  console.log('listening on port :3000');
+});
