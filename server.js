@@ -5,21 +5,35 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+var clients = {};
+var countPlayers = 0, maxPlayers = 2;
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', (socket) => {
-  console.log('A user connected,  connection id: ', socket.id)
 
-  socket.on('send message', (message) => {
-    io.emit('receive message', message)
-  })
+    let id = socket.id;
+   
+    if(countPlayers == maxPlayers) {
+      console.log("Full room: " + countPlayers);
+      socket.disconnect();
+    } else {
+      console.log('A user connected,  connection id: ', socket.id);
+      clients[id] = socket;
+      countPlayers++;
+    }
 
+    socket.on('disconnect', () => {
+      console.log('A user Disconnected,  Disconnected id: ', socket.id);
+      delete clients[id];
+      countPlayers--;
+    })
 
-  socket.on('disconnect', () => {
-    console.log('A user Disconnected.');
-  })
+    socket.on('send message', (message) => {
+      io.emit('receive message', message)
+    })
 
 });
 
