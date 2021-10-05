@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   padding-bottom: 3rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
@@ -46,4 +46,14 @@ body {
 }
 #messages > li:nth-child(odd) {
   background: #efefef;
+} */
+
+#joystick_zone {
+  position: relative;
+
+  height: 600px;
+  width: 600px;
+  margin: 100px auto;
+
+  border: 1px solid gray;
 }

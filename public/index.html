@@ -2,15 +2,21 @@
 <html>
   <head>
     <title>Socket.io</title>
-    <link rel="stylesheet" type="text/css" href="global.css" />
+    <link rel="stylesheet" type="text/css" href="/public/global.css" />
   </head>
   <body>
-    <ul id="messages"></ul>
+    <!-- <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button type="submit">Send</button>
-    </form>
+    </form> -->
+    <div id="joystick_zone"></div>
 
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="socket.js"></script>
+    <!-- <script type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+    <!-- <script type="text/javascript" src="socket.js"></script> -->
+    <script
+      type="text/javascript"
+      src="/node_modules/nipplejs/dist/nipplejs.js"
+    ></script>
+    <script type="text/javascript" src="/public/nipple.js"></script>
   </body>
 </html>
